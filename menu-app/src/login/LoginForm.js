@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import 'bootstrap/dist/css/bootstrap.min.css'
 
 export default class LoginForm extends Component {
     constructor(props) {
@@ -32,30 +31,22 @@ export default class LoginForm extends Component {
     handler = () => { this.setState() }
 
     handleChange = (e) => {
-        this.setState({[e.target.name]: e.target.value}, () => {
-            // const {username, password} = this.state;
-            // console.log('State:', username, password);
-        });
+        this.setState({[e.target.name]: e.target.value});
     }
 
     handleSubmit = (e) => {
-        
+        console.log(this.state)
     }
 
     render() {
         return (
-            // <form onSubmit={this.handleSubmit}>
-            //     <input name="username" placeholder="Enter username" onChange={this.handleChange}></input>
-            //     <input name="password" type="password" placeholder="Enter password" onChange={this.handleChange}></input>
-            //     <input type="submit"></input>
-            // </form>
-            <Form>
+            <Form className={this.props.className}>
+                <h2>Login to Admin Panel</h2>
+                <br/>
+                <br/>
                 <Form.Group controlId="formBasicEmail">
                     <Form.Label>Username</Form.Label>
                     <Form.Control name="username" required={true} type="text" placeholder="Enter username" onChange={this.handleChange} />
-                    {/* <Form.Text className="text-muted">
-                    We'll never share your email with anyone else.
-                    </Form.Text> */}
                 </Form.Group>
 
                 <Form.Group controlId="formBasicPassword">
@@ -63,7 +54,7 @@ export default class LoginForm extends Component {
                     <Form.Control name="password" required={true} type="password" placeholder="Password" onChange={this.handleChange}/>
                 </Form.Group>
                 <Form.Group controlId="formBasicCheckbox">
-                    <Form.Check type="checkbox" label="Check me out" />
+                    <Form.Check type="checkbox" label="Remember me" />
                 </Form.Group>
                 <Button variant="primary" type="submit">
                     Submit

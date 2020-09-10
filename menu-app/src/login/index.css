@@ -1,0 +1,4 @@
+.splash-img-cont {
+    filter: brightness(0.6);
+    clip-path: ellipse(54% 96% at 44% 49%);
+}

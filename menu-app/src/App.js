@@ -1,13 +1,14 @@
 import React from 'react';
 import './App.css';
-import LoginForm from './login/LoginForm';
+import {LoginPage} from './login';
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 function App() {
   return (
-    <div className="App">
-      <LoginForm/>
+    <div className="App d-flex">
+      <LoginPage/>
     </div>
   );
 }
 
-export default App;
+export default App; 
