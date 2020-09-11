@@ -8,11 +8,6 @@ export default class LoginPage extends Component {
     constructor(props) {
         super(props)
 
-        this.state = {
-            username: '',
-            password: ''     
-        }
-
         this.handleEvent = this.handleEvent.bind(this)
     }
 
@@ -34,18 +29,16 @@ export default class LoginPage extends Component {
 
     render() {
         return (
-            // <Container fluid={true} className="d-flex">
-                <Row noGutters={true} className="flex-grow-1">
-                    <Col className="splash-img-cont position-relative" style={{overflow: "hidden", maxHeight: "100%"}}>
-                        <Img className="splash-img" 
-                            style={{ overflow: "hidden", backgroundColor: "grey", objectFit: 'cover' }} 
-                            width="100%" height="100%" src={logo} onLoad={this.onLoadImgEvent}></Img>
-                    </Col>
-                    <Col className="form-cont d-flex flex-row align-items-center" md="4">
-                        <LoginForm className="p-4 flex-grow-1"></LoginForm>
-                    </Col>
-                </Row>
-            // </Container>
+            <Row noGutters={true} className="flex-grow-1">
+                <Col className="splash-img-cont position-relative" style={{overflow: "hidden", maxHeight: "100%"}}>
+                    <Img className="splash-img" 
+                        style={{ overflow: "hidden", backgroundColor: "grey", objectFit: 'cover' }} 
+                        width="100%" height="100%" src={logo} onLoad={this.onLoadImgEvent}></Img>
+                </Col>
+                <Col className="form-cont d-flex flex-row align-items-center" md="4">
+                    <LoginForm className="p-4 flex-grow-1"></LoginForm>
+                </Col>
+            </Row>
         )
     }
 }

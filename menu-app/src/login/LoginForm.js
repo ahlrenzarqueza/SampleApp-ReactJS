@@ -1,14 +1,20 @@
 import React, { Component } from 'react'
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Api from '../apis'
+import { Alert } from 'react-bootstrap';
 
 export default class LoginForm extends Component {
     constructor(props) {
-        super(props)
+        super(props);
+        this.alertError = React.createRef();
 
         this.state = {
-            username: '',
-            password: ''     
+            email: '',
+            password: '',
+            variant: 'success',
+            show: false,
+            errorMessage: 'Error'  
         }
 
         this.handleEvent = this.handleEvent.bind(this)
@@ -35,23 +41,51 @@ export default class LoginForm extends Component {
     }
 
     handleSubmit = (e) => {
-        console.log(this.state)
+        e.preventDefault();
+        const me = this;
+        this.setState({
+            'error': 'success',
+            'email': this.emailInput.value,
+            'password': this.passwordInput.value
+        }, function () {
+            const prm = Api.login(this.state);
+            prm.then(function (resp) {
+                me.setState({
+                    variant: 'success',
+                    show: false
+                }, () => {
+                    alert('Successful login.');
+                });
+            }).catch(function (err) {
+                me.setState({
+                    show: true,
+                    variant: 'danger',
+                    errorMessage: err.toString()
+                });
+            })
+        });
     }
 
     render() {
         return (
-            <Form className={this.props.className}>
+            <Form className={this.props.className} onSubmit={this.handleSubmit}>
                 <h2>Login to Admin Panel</h2>
                 <br/>
                 <br/>
+                <Alert variant={this.state.variant} show={this.state.show} dismissible={true}
+                    ref={el => {this.alertError = el}}>
+                    {this.state.errorMessage}
+                </Alert>
                 <Form.Group controlId="formBasicEmail">
-                    <Form.Label>Username</Form.Label>
-                    <Form.Control name="username" required={true} type="text" placeholder="Enter username" onChange={this.handleChange} />
+                    <Form.Label>E-mail Address</Form.Label>
+                    <Form.Control name="email" required={true} type="email" placeholder="Enter e-mail" 
+                    onChange={this.handleChange} ref={el => {this.emailInput = el}} />
                 </Form.Group>
 
                 <Form.Group controlId="formBasicPassword">
                     <Form.Label>Password</Form.Label>
-                    <Form.Control name="password" required={true} type="password" placeholder="Password" onChange={this.handleChange}/>
+                    <Form.Control name="password" required={true} type="password" placeholder="Password" 
+                    onChange={this.handleChange} ref={el => {this.passwordInput = el}}/>
                 </Form.Group>
                 <Form.Group controlId="formBasicCheckbox">
                     <Form.Check type="checkbox" label="Remember me" />
