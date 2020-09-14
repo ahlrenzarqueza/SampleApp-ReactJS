@@ -29,7 +29,7 @@ export default class LoginPage extends Component {
 
     render() {
         return (
-            <Row noGutters={true} className="flex-grow-1">
+            <Row noGutters={true} className="flex-grow-1" style={{width: "100%", height: "100%"}}>
                 <Col className="splash-img-cont position-relative" style={{overflow: "hidden", maxHeight: "100%"}}>
                     <Img className="splash-img" 
                         style={{ overflow: "hidden", backgroundColor: "grey", objectFit: 'cover' }} 

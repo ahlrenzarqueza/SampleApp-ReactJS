@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Api from '../apis'
-import { Alert } from 'react-bootstrap';
+import { Alert, Spinner } from 'react-bootstrap';
+import { Redirect } from 'react-router-dom';
 
 export default class LoginForm extends Component {
     constructor(props) {
@@ -13,7 +14,7 @@ export default class LoginForm extends Component {
             email: '',
             password: '',
             variant: 'success',
-            show: false,
+            showAlert: false,
             errorMessage: 'Error'  
         }
 
@@ -44,21 +45,23 @@ export default class LoginForm extends Component {
         e.preventDefault();
         const me = this;
         this.setState({
-            'error': 'success',
             'email': this.emailInput.value,
-            'password': this.passwordInput.value
+            'password': this.passwordInput.value,
+            'variant': 'loading',
+            'showAlert': false
         }, function () {
             const prm = Api.login(this.state);
             prm.then(function (resp) {
                 me.setState({
                     variant: 'success',
-                    show: false
+                    showAlert: false,
+                    loggedIn: true,
                 }, () => {
                     alert('Successful login.');
                 });
             }).catch(function (err) {
                 me.setState({
-                    show: true,
+                    showAlert: true,
                     variant: 'danger',
                     errorMessage: err.toString()
                 });
@@ -67,12 +70,16 @@ export default class LoginForm extends Component {
     }
 
     render() {
-        return (
+        return this.state.loggedIn ? 
+        (
+            <Redirect to="/admin"/>
+        ) :
+        (
             <Form className={this.props.className} onSubmit={this.handleSubmit}>
                 <h2>Login to Admin Panel</h2>
                 <br/>
                 <br/>
-                <Alert variant={this.state.variant} show={this.state.show} dismissible={true}
+                <Alert variant={this.state.variant} show={this.state.showAlert} dismissible={true}
                     ref={el => {this.alertError = el}}>
                     {this.state.errorMessage}
                 </Alert>
@@ -90,8 +97,12 @@ export default class LoginForm extends Component {
                 <Form.Group controlId="formBasicCheckbox">
                     <Form.Check type="checkbox" label="Remember me" />
                 </Form.Group>
-                <Button variant="primary" type="submit">
-                    Submit
+                <Button variant="primary" type="submit" disabled={this.state.variant == "loading"}>
+                    { this.state.variant == "loading" ? 
+                        <React.Fragment>
+                            <Spinner animation="grow" variant="light" size="sm" /><span>Logging in...</span>
+                        </React.Fragment>
+                        : <span>Submit</span>}
                 </Button>
             </Form>
         )

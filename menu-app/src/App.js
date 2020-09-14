@@ -8,7 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 
 function App() {
   return (
-    <div className="App d-flex">
+    <div className="App">
       <BrowserRouter>
         <Route exact={true} path="/" component={LoginPage} />
         <ProtectedRoute exact={true} path="/admin" component={AdminPage} />
