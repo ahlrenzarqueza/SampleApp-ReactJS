@@ -3,7 +3,6 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Api from '../apis'
 import { Alert, Spinner } from 'react-bootstrap';
-import { Redirect } from 'react-router-dom';
 
 export default class LoginForm extends Component {
     constructor(props) {
@@ -52,13 +51,7 @@ export default class LoginForm extends Component {
         }, function () {
             const prm = Api.login(this.state);
             prm.then(function (resp) {
-                me.setState({
-                    variant: 'success',
-                    showAlert: false,
-                    loggedIn: true,
-                }, () => {
-                    alert('Successful login.');
-                });
+                me.props.onLogin(resp.data);
             }).catch(function (err) {
                 me.setState({
                     showAlert: true,
@@ -70,13 +63,9 @@ export default class LoginForm extends Component {
     }
 
     render() {
-        return this.state.loggedIn ? 
-        (
-            <Redirect to="/admin"/>
-        ) :
-        (
+        return (
             <Form className={this.props.className} onSubmit={this.handleSubmit}>
-                <h2>Login to Admin Panel</h2>
+                <h2>Login to your myWallet</h2>
                 <br/>
                 <br/>
                 <Alert variant={this.state.variant} show={this.state.showAlert} dismissible={true}
@@ -97,8 +86,8 @@ export default class LoginForm extends Component {
                 <Form.Group controlId="formBasicCheckbox">
                     <Form.Check type="checkbox" label="Remember me" />
                 </Form.Group>
-                <Button variant="primary" type="submit" disabled={this.state.variant == "loading"}>
-                    { this.state.variant == "loading" ? 
+                <Button variant="primary" type="submit" disabled={this.state.variant === "loading"}>
+                    { this.state.variant === "loading" ? 
                         <React.Fragment>
                             <Spinner animation="grow" variant="light" size="sm" /><span>Logging in...</span>
                         </React.Fragment>

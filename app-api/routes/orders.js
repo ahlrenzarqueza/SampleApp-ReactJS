@@ -3,7 +3,11 @@ const jwt = require('express-jwt');
 // const {user, userValidate, loginValidate} = require('../models/user');
 
 const jwtSecret = process.env.JWT_SECRET;
-router.use(jwt({secret: jwtSecret, algorithms: ['HS256'] }));
+router.use(jwt({
+    secret: jwtSecret, 
+    algorithms: ['HS256'],
+    getToken: req => req.cookies.token 
+}));
 
 router.post('/listorders', async (req, res) => {
     res.send({success: true});

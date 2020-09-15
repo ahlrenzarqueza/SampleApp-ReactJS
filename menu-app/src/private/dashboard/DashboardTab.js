@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Card, Row, Col, Button } from 'react-bootstrap';
+import AccountTab from './AccountTab';
+import AnimatedNumber from '../AnimatedNumber';
 
 export default class DashboardTab extends Component {
     constructor(props) {
@@ -31,26 +33,26 @@ export default class DashboardTab extends Component {
     render() {
         return (
             <>
-                <Row>
+                <Row className="mb-4">
                     <Col>
                     <Card>
                         <Card.Header as="h5">Featured</Card.Header>
                         <Card.Body>
-                            <Card.Title>Special title treatment</Card.Title>
-                            <Card.Text>
+                            <AccountTab></AccountTab>
+                            {/* <Card.Text>
                             With supporting text below as a natural lead-in to additional content.
                             </Card.Text>
-                            <Button variant="primary">Go somewhere</Button>
+                            <Button variant="primary">Go somewhere</Button> */}
                         </Card.Body>
                     </Card>
                     </Col>
                 </Row>
                 <Row>
-                    <Col>
-                        <Card style={{ width: '18rem' }}>
-                            <Card.Header as="h5">Menu Items</Card.Header>
+                    <Col xs={12} md={4}>
+                        <Card>
+                            <Card.Header as="h5">Income</Card.Header>
                             <Card.Body>
-                                <Card.Title>Card Title</Card.Title>
+                                <AnimatedNumber value={69} default={0}/>
                                 <Card.Text>
                                 Some quick example text to build on the card title and make up the bulk of
                                 the card's content.
@@ -59,11 +61,11 @@ export default class DashboardTab extends Component {
                             </Card.Body>
                         </Card>
                     </Col>
-                    <Col>
-                        <Card style={{ width: '18rem' }}>
-                            <Card.Header as="h5">Orders</Card.Header>
+                    <Col xs={12} md={4}>
+                        <Card>
+                            <Card.Header as="h5">Expenses</Card.Header>
                             <Card.Body>
-                                <Card.Title>Card Title</Card.Title>
+                                <AnimatedNumber value={96} default={0}/>
                                 <Card.Text>
                                 Some quick example text to build on the card title and make up the bulk of
                                 the card's content.
@@ -72,11 +74,11 @@ export default class DashboardTab extends Component {
                             </Card.Body>
                         </Card>
                     </Col>
-                    <Col>
-                        <Card style={{ width: '18rem' }}>
-                            <Card.Header as="h5">Users</Card.Header>
+                    <Col xs={12} md={4}>
+                        <Card>
+                            <Card.Header as="h5">Others</Card.Header>
                             <Card.Body>
-                                <Card.Title>Card Title</Card.Title>
+                                <AnimatedNumber value={40} default={0}/>
                                 <Card.Text>
                                 Some quick example text to build on the card title and make up the bulk of
                                 the card's content.

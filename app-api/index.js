@@ -4,6 +4,7 @@ const cors = require('cors');
 const app = express();
 const mongoose = require('mongoose');
 const env = require('dotenv');
+var cookieParser = require('cookie-parser');
 env.config();
 
 const authRoutes = require('./routes/auth');
@@ -11,6 +12,7 @@ const orderRoutes = require('./routes/orders');
 
 // middleware
 app.use(cors());
+app.use(cookieParser());
 app.use(express.json());
 
 // routes

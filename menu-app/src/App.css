@@ -1,12 +1,14 @@
 html, body, body > #root {
   width: 100%;
   height: 100%;
+  font-family: 'Rubik', sans-serif;
 }
 
 .App {
+  display: flex;
+  flex-direction: column;
   width: 100%;
   height: 100%;
-  overflow: hidden;
 }
 
 .App-logo {
@@ -42,4 +44,10 @@ html, body, body > #root {
   to {
     transform: rotate(360deg);
   }
+}
+
+@font-face {
+  font-family: "Rubik";
+  src: url("./assets/Rubik/Rubik-VariableFont_wght.ttf") format("truetype");
+  font-weight: 100 900;
 }

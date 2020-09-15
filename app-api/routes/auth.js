@@ -2,7 +2,9 @@ const router = require('express').Router();
 const {user, userValidate, loginValidate} = require('../models/user');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const expjwt = require('express-jwt');
 
+const jwtSecret = process.env.JWT_SECRET;
 
 router.post('/register', async (req, res) => {
     const {error} = userValidate(req.body);
@@ -48,6 +50,27 @@ router.post('/login', async (req, res) => {
     catch(e) {
         return res.status(500).send({"error" : e});
     }
+});
+
+
+router.post('/logout', async (req, res) => {
+    res.clearCookie('token')
+    return res.status(200).send({"success" : "User logged out"});
+});
+
+const mdl = expjwt({
+    secret: jwtSecret, 
+    algorithms: ['HS256'],
+    getToken: req => {
+        return req.cookies.token
+    }
+});
+
+router.post('/getuser', mdl, async (req, res) => {
+   const userObj = jwt.verify(req.cookies.token, jwtSecret);
+   var userRecord = await user.findOne({_id : userObj.id});
+   const {email, name, _id, date} = userRecord;
+   return res.send({email, name, _id, date});
 });
 
 module.exports = router; 

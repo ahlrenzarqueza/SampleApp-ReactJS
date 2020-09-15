@@ -1,0 +1,17 @@
+.navbar .navbar-brand > .label {
+    margin-left: 3mm;
+}
+
+#AdminRow {
+    overflow: hidden;
+    padding-bottom: 0 !important;
+}
+
+#TabContent {
+    overflow: auto;
+    max-height: 100%;
+}
+
+#TabContent > div {
+    padding-bottom: 4mm
+}
