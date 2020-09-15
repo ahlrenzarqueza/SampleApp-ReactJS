@@ -36,7 +36,7 @@ export default class DashboardTab extends Component {
                 <Row className="mb-4">
                     <Col>
                     <Card>
-                        <Card.Header as="h5">Featured</Card.Header>
+                        <Card.Header as="h5">Overview</Card.Header>
                         <Card.Body>
                             <AccountTab></AccountTab>
                             {/* <Card.Text>
@@ -57,7 +57,7 @@ export default class DashboardTab extends Component {
                                 Some quick example text to build on the card title and make up the bulk of
                                 the card's content.
                                 </Card.Text>
-                                <Button variant="primary">Manage Menus</Button>
+                                <Button variant="primary">Manage Transactions</Button>
                             </Card.Body>
                         </Card>
                     </Col>
@@ -70,7 +70,7 @@ export default class DashboardTab extends Component {
                                 Some quick example text to build on the card title and make up the bulk of
                                 the card's content.
                                 </Card.Text>
-                                <Button variant="primary">Manage Orders</Button>
+                                <Button variant="primary">Manage Transactions</Button>
                             </Card.Body>
                         </Card>
                     </Col>
@@ -83,7 +83,7 @@ export default class DashboardTab extends Component {
                                 Some quick example text to build on the card title and make up the bulk of
                                 the card's content.
                                 </Card.Text>
-                                <Button variant="primary">Manage Users</Button>
+                                <Button variant="primary">Manage Transactions</Button>
                             </Card.Body>
                         </Card>
                     </Col>

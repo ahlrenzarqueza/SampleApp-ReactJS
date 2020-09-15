@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { Dropdown, DropdownButton, Tab, Col, Row } from 'react-bootstrap';
 import AnimatedNumber from '../AnimatedNumber';
-import { PieChart } from "react-minimal-pie-chart";
+import { Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts';
+import { Line, LineChart, XAxis, YAxis, Legend, CartesianGrid } from 'recharts';
+import './AccountTab.css';
 
 export default class AccountTab extends Component {
     constructor(props) {
@@ -44,7 +46,7 @@ export default class AccountTab extends Component {
     render() {
         const {activeaccount: active} = this.state;
         const dropitems = [
-            <Dropdown.Item eventKey="summary" active={active === "summary"}>All</Dropdown.Item>,
+            <Dropdown.Item eventKey="summary" active={active === "summary"}>All Accounts</Dropdown.Item>,
             <Dropdown.Divider />
         ];
         const tabitems = [
@@ -63,19 +65,23 @@ export default class AccountTab extends Component {
             <>
                 <Tab.Container id="left-tabs-example" defaultActiveKey="summary">
                     <Row>
-                        <Dropdown onSelect={this.onTabChange}>
-                            <DropdownButton
-                                id={'accountvariant'}
-                                title={active === 'summary' ? 'All Accounts' : this.state.accounts[active]}
-                            >
-                                {dropitems}
-                            </DropdownButton>
-                        </Dropdown>
+                        <Col>
+                            <Dropdown onSelect={this.onTabChange}>
+                                <DropdownButton
+                                    id={'accountvariant'}
+                                    title={active === 'summary' ? 'All Accounts' : this.state.accounts[active]}
+                                >
+                                    {dropitems}
+                                </DropdownButton>
+                            </Dropdown>
+                        </Col>
                     </Row>
                     <Row>
-                        <Tab.Content>
-                            {tabitems}
-                        </Tab.Content>
+                        <Col>
+                            <Tab.Content>
+                                {tabitems}
+                            </Tab.Content>
+                        </Col>
                     </Row>
                 </Tab.Container>
             </>
@@ -88,19 +94,19 @@ function AccountTabPage ({id, totalamt}) {
     const sampledata = [
         {
             key: "Salary",
-            value: 50
+            value: 120000
         },
         {
             key: "Savings",
-            value: 50
+            value: 20000
         },
         {
             key: "Investments",
-            value: 50
+            value: 8000
         },
         {
             key: "Insurance",
-            value: 50
+            value: 10000
         }
     ]
 
@@ -117,33 +123,53 @@ function AccountTabPage ({id, totalamt}) {
 
         data.push(insert);
     });
+
+    const RADIAN = Math.PI / 180;
+    const piePercentage = ({
+        cx, cy, midAngle, innerRadius, outerRadius, percent, index,
+      }) => {
+         const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+        const x = cx + radius * Math.cos(-midAngle * RADIAN);
+        const y = cy + radius * Math.sin(-midAngle * RADIAN);
+      
+        return (
+          <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
+            {`${(percent * 100).toFixed(0)}%`}
+          </text>
+        );
+      };
+
     return (
-        <Row>
+        <Row className="AccountTabPage p-4">
             <Col>
-                <AnimatedNumber value={totalamt} prefix={"₱"} withComma={true} default={0}/>
+                <div className="balcont">
+                    <h4>Balance</h4>
+                    <AnimatedNumber value={totalamt} prefix={"₱"} withComma={true} default={0}/>
+                </div>
             </Col>
             <Col>
-                <PieChart
-                animate
-                animationDuration={500}
-                animationEasing="ease-out"
-                center={[50, 50]}
-                data={data}
-                lengthAngle={360}
-                lineWidth={15}
-                paddingAngle={0}
-                radius={50}
-                rounded
-                startAngle={0}
-                viewBoxSize={[100, 100]}
-                label={(data) => data.dataEntry.title}
-                labelPosition={65}
-                labelStyle={{
-                    fontSize: "10px",
-                    fontColor: "FFFFFA",
-                    fontWeight: "800",
-                }}
-                />
+                <ResponsiveContainer width={"100%"} height={"100%"}>
+                    <PieChart>
+                        <Pie dataKey="value" isAnimationActive={false} data={data} cx={"50%"} cy={"50%"} outerRadius={"100%"} fill="#8884d8" 
+                            label={piePercentage} />
+                        <Tooltip/>
+                        {/* <Legend payload={data.map(e => {return {value: e.title, id: e.title}})}/> */}
+                    </PieChart>
+                </ResponsiveContainer>
+            </Col>
+            <Col>
+                <ResponsiveContainer width={"100%"} height={"100%"}>
+                    <LineChart data={data}
+                        margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="name" />
+                        <YAxis />
+                        <Tooltip />
+                        <Legend />
+                        <Line type="monotone" dataKey="pv" stroke="#8884d8" />
+                        <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
+                    </LineChart>
+                </ResponsiveContainer>
             </Col>
         </Row>
     )

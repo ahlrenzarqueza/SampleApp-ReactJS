@@ -7,7 +7,7 @@ function AnimatedNumber({value, defvalue, withComma, prefix}) {
     }
 
     return (
-        <>
+        <div className="AnimatedNumber">
             <span className="inline">{prefix}</span>
             <AnimatedNumberLib component="text" value={value} default={defvalue}
                 style={{
@@ -21,7 +21,7 @@ function AnimatedNumber({value, defvalue, withComma, prefix}) {
                 )}
                 duration={1000}
                 formatValue={n => withComma ? numberWithComma(n) : parseInt(n)}/>
-        </>
+        </div>
     )
 }
 

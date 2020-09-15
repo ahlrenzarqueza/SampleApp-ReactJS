@@ -1,0 +1,20 @@
+#accountvariant {
+    position: absolute;
+    background-color: transparent;
+    border: none;
+    color: #3d7cff;
+    z-index: 2;
+}
+
+#accountvariant:after {
+    margin-left: 1em;
+}
+
+.AccountTabPage {
+    min-height: 250px;
+}
+
+.AccountTabPage .balcont {
+    position: absolute;
+    top: 60px;
+}
